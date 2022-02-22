@@ -1,0 +1,151 @@
+@import "~bootstrap/scss/bootstrap";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+.default-spinner {
+  text-align: center;
+}
+
+nav svg {
+  vertical-align: -2px;
+}
+
+.navbar-nav {
+  flex-direction: row;
+
+  .nav-link {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.offcanvas {
+  .offcanvas-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .list-group-item {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    i {
+      margin-right: 0.6rem;
+      vertical-align: -3px;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+#grid {
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+
+  button {
+    z-index: 3;
+    position: relative;
+    margin-right: 0.4rem;
+    flex: 0 0 50%;
+
+    svg {
+      transform: scale(1.5);
+    }
+  }
+}
+
+.card-title {
+  i {
+    margin-right: 0.2rem;
+    vertical-align: -1px;
+    color: green;
+    font-size: 1.4rem;
+  }
+}
+
+.card-body {
+  text-align: center;
+
+  @keyframes fade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .fade {
+    opacity: 1;
+    animation: fade 2s linear;
+  }
+
+  .fadeIn {
+    opacity: 1;
+    animation: fadeIn 1s linear;
+  }
+}
+
+.modal-header {
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+
+  h4 {
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
+
+  svg {
+    margin-right: 0.4rem;
+    vertical-align: -3px;
+  }
+}
+
+.form-switch {
+  float: right;
+}
+
+.form {
+  svg {
+    margin-right: 0.3rem;
+    vertical-align: -3px;
+  }
+}
+
+.custom-modal {
+  .modal-content {
+    border-radius: 0.7rem;
+  }
+
+  .form-range {
+    width: 87%;
+    height: auto;
+  }
+
+  .row {
+    padding-bottom: 2rem;
+  }
+
+  .slider-value {
+    height: 1.6rem;
+    width: 3.4rem;
+  }
+
+  #color-picker {
+    width: 100%;
+  }
+
+  .modal-svg {
+    margin-top: 0;
+  }
+}

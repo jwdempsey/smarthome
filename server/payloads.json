@@ -1,0 +1,27 @@
+{
+  "GET": {
+    "name": "test",
+    "key": "key",
+    "model": "model",
+    "manufacturer": "manufacturer",
+    "type": "light",
+    "commands": [],
+    "properties": {
+      "online": true,
+      "powerState": "on",
+      "brightness": 100,
+      "color": {
+        "r": 98,
+        "b": 28,
+        "g": 125
+      }
+    }
+  },
+  "POST ": {
+    "command": "command",
+    "value": "value",
+    "manufacturer": "manufacturer",
+    "model": "model",
+    "key": "key"
+  }
+}
