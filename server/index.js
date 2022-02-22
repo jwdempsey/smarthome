@@ -13,18 +13,34 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app
   .route("/api/devices")
   .get((req, res) => {
-    PubSub.notify("get", req).then((response) => res.send(response));
+    try {
+      PubSub.notify("get", req).then((response) => res.send(response));
+    } catch (e) {
+      res.send([]);
+    }
   })
   .post((req, res) => {
-    PubSub.notify("post", req).then((response) => res.send(response));
+    try {
+      PubSub.notify("post", req).then((response) => res.send(response));
+    } catch (e) {
+      res.send([]);
+    }
   });
 
 app.get("/api/devices/:manufacturer/:key", (req, res) => {
-  PubSub.notify("getById", req).then((response) => res.send(response));
+  try {
+    PubSub.notify("getById", req).then((response) => res.send(response));
+  } catch (e) {
+    res.send([]);
+  }
 });
 
 app.get("/api/devices/types", (req, res) => {
-  res.send(types);
+  try {
+    res.send(types);
+  } catch (e) {
+    res.send([]);
+  }
 });
 
 app.listen(3000, () => {
