@@ -28,7 +28,12 @@ class KasaClient extends BaseSubscriber {
         }));
       },
     };
+
     super(manufacturer, schema);
+
+    if (!process.env.KASA_EMAIL || !process.env.KASA_PASSWORD) {
+      this.canLogin = false;
+    }
   }
 
   async login() {
@@ -42,7 +47,7 @@ class KasaClient extends BaseSubscriber {
     return this.client;
   }
 
-  async getDevices(filters) {
+  async getDevices(filters = []) {
     await this.login();
     const deviceList = await this.client.getDeviceList();
     return deviceList.filter((device) => filters.every((f) => f(device)));

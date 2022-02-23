@@ -28,35 +28,46 @@ class GoveeClient extends BaseSubscriber {
 
     super(manufacturer, schema);
 
-    this.govee = new Govee({
-      apiKey: process.env.GOVEE_API_KEY,
-      mac: "",
-      model: "",
-    });
+    if (!process.env.GOVEE_API_KEY) {
+      this.canLogin = false;
+    }
   }
 
-  client(mac = "", model = "") {
-    return Object.assign(this.govee, { mac: mac, model: model });
+  login(mac = "", model = "") {
+    this.client = new Govee({
+      apiKey: process.env.GOVEE_API_KEY,
+      mac: mac,
+      model: model,
+    });
+
+    return this.client;
+  }
+
+  async getDevices(filters = []) {
+    this.login();
+    const deviceList = await this.client.getDevices();
+    return deviceList.devices.filter((device) =>
+      filters.every((f) => f(device))
+    );
   }
 
   async get(req) {
-    const devices = await this.client().getDevices();
-    return devices.devices;
+    return await this.getDevices();
   }
 
   async getById(req) {
     // Get device with the passed in key
-    const devices = await this.get(req);
-    let device = devices.find((d) => d.device === req.params.key);
+    const devices = await this.getDevices([(d) => d.device === req.params.key]);
+    const device = devices[0];
 
     // Get current state of device
-    const state = await this.client(device.device, device.model).getState();
+    const state = await this.login(device.device, device.model).getState();
 
     return Object.assign(device, { properties: state.data.properties });
   }
 
   async post(req) {
-    const client = this.client(req.body.key, req.body.model);
+    const client = this.login(req.body.key, req.body.model);
     switch (req.body.command) {
       case "power":
         if (!req.body.value) {

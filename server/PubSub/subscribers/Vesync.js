@@ -19,7 +19,12 @@ class VesyncClient extends BaseSubscriber {
         }));
       },
     };
+
     super(manufacturer, schema);
+
+    if (!process.env.VESYNC_EMAIL || !process.env.VESYNC_PASSWORD) {
+      this.canLogin = false;
+    }
   }
 
   async login() {
@@ -34,14 +39,14 @@ class VesyncClient extends BaseSubscriber {
     return this.client;
   }
 
-  async getDevices(filters) {
+  async getDevices(filters = []) {
     await this.login();
     const deviceList = await this.client.getDevices();
     return deviceList.filter((device) => filters.every((f) => f(device)));
   }
 
   async get(req) {
-    return await this.getDevices([]);
+    return await this.getDevices();
   }
 
   async getById(req) {

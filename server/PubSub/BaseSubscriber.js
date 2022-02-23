@@ -2,10 +2,14 @@ module.exports = class BaseSubscriber {
   constructor(manufacturer, schema) {
     this.manufacturer = manufacturer.toLowerCase();
     this.schema = schema;
+    this.canLogin = true;
   }
 
   shouldProcess(manufacturer) {
-    return manufacturer === "all" || manufacturer === this.manufacturer;
+    return (
+      (this.canLogin && manufacturer === "all") ||
+      manufacturer === this.manufacturer
+    );
   }
 
   async get(req) {
