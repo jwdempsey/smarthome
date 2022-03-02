@@ -44,11 +44,21 @@ class GoveeClient extends BaseSubscriber {
   }
 
   async getDevices(filters = []) {
+    let devices = [];
     this.login();
-    const deviceList = await this.client.getDevices();
-    return deviceList.devices.filter((device) =>
-      filters.every((f) => f(device))
-    );
+
+    await this.client
+      .getDevices()
+      .then((deviceList) => {
+        devices = deviceList.devices.filter((device) =>
+          filters.every((f) => f(device))
+        );
+      })
+      .catch(() => {
+        return;
+      });
+
+    return devices;
   }
 
   async get(req) {

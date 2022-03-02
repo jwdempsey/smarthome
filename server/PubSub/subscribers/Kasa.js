@@ -38,10 +38,14 @@ class KasaClient extends BaseSubscriber {
 
   async login() {
     if (!this.client) {
-      this.client = await login(
-        process.env.KASA_EMAIL,
-        process.env.KASA_PASSWORD
-      );
+      await login(process.env.KASA_EMAIL, process.env.KASA_PASSWORD)
+        .then((response) => {
+          this.client = response;
+        })
+        .catch(() => {
+          this.canLogin = false;
+          this.client = null;
+        });
     }
 
     return this.client;
@@ -49,8 +53,11 @@ class KasaClient extends BaseSubscriber {
 
   async getDevices(filters = []) {
     await this.login();
-    const deviceList = await this.client.getDeviceList();
-    return deviceList.filter((device) => filters.every((f) => f(device)));
+    if (this.canLogin) {
+      const deviceList = await this.client.getDeviceList();
+      return deviceList.filter((device) => filters.every((f) => f(device)));
+    }
+    return [];
   }
 
   async get(req) {
@@ -93,22 +100,26 @@ class KasaClient extends BaseSubscriber {
   }
 
   async post(req) {
-    const device = this.client.newDevice(req.body.name);
+    if (this.canLogin) {
+      const device = this.client.newDevice(req.body.name);
 
-    switch (req.body.command) {
-      case "power":
-        if (!req.body.value) {
-          return await device.powerOff();
-        } else {
-          return await device.powerOn();
-        }
-      case "brightness":
-        // API does not allow a brightness level of 0
-        const brightness = req.body.value == 0 ? 1 : parseInt(req.body.value);
-        return await device.setBrightness(brightness);
-      default:
-        throw new Error(`${req.body.command} is not supported`);
+      switch (req.body.command) {
+        case "power":
+          if (!req.body.value) {
+            return await device.powerOff();
+          } else {
+            return await device.powerOn();
+          }
+        case "brightness":
+          // API does not allow a brightness level of 0
+          const brightness = req.body.value == 0 ? 1 : parseInt(req.body.value);
+          return await device.setBrightness(brightness);
+        default:
+          throw new Error(`${req.body.command} is not supported`);
+      }
     }
+
+    return {};
   }
 }
 

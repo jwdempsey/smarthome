@@ -1,5 +1,5 @@
 const BaseSubscriber = require("../BaseSubscriber");
-const Client = require("node-vesync");
+const Vesync = require("node-vesync");
 
 class VesyncClient extends BaseSubscriber {
   constructor() {
@@ -29,11 +29,13 @@ class VesyncClient extends BaseSubscriber {
 
   async login() {
     if (!this.client) {
-      this.client = new Client();
-      await this.client.login(
-        process.env.VESYNC_EMAIL,
-        process.env.VESYNC_PASSWORD
-      );
+      this.client = new Vesync();
+      await this.client
+        .login(process.env.VESYNC_EMAIL, process.env.VESYNC_PASSWORD)
+        .catch(() => {
+          this.canLogin = false;
+          this.client = null;
+        });
     }
 
     return this.client;
@@ -41,8 +43,13 @@ class VesyncClient extends BaseSubscriber {
 
   async getDevices(filters = []) {
     await this.login();
-    const deviceList = await this.client.getDevices();
-    return deviceList.filter((device) => filters.every((f) => f(device)));
+
+    if (this.canLogin) {
+      const deviceList = await this.client.getDevices();
+      return deviceList.filter((device) => filters.every((f) => f(device)));
+    }
+
+    return [];
   }
 
   async get(req) {

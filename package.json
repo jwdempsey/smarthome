@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "webpack serve --mode development  --hot --open",
+    "client": "webpack serve --mode development  --hot",
     "server": "node server",
     "build": "webpack --config webpack.config.js --mode production",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
@@ -20,7 +20,7 @@
     "express": "^4.17.2",
     "node-govee-led": "^1.5.0",
     "node-json-transform": "^1.1.2",
-    "node-vesync": "^1.0.1",
+    "node-vesync": "^1.0.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.0",
     "react-bootstrap-icons": "^1.7.2",
