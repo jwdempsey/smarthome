@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "client": "webpack serve --mode development  --hot",
-    "server": "node server",
+    "server": "node server/src",
     "build": "webpack --config webpack.config.js --mode production",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
-    "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/**/*.js"
+    "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js"
   },
   "keywords": [],
   "author": "Joe Dempsey",
