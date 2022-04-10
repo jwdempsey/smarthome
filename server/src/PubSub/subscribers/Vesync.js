@@ -1,5 +1,6 @@
 const BaseSubscriber = require("../BaseSubscriber");
 const Vesync = require("node-vesync");
+const HTTPError = require("../../HTTPError");
 
 class VesyncClient extends BaseSubscriber {
   constructor() {
@@ -11,6 +12,7 @@ class VesyncClient extends BaseSubscriber {
         model: "deviceType",
         properties: "properties",
         commands: "commands",
+        message: "message",
       },
       each: (item) => {
         return (item = Object.assign(item, {
@@ -80,16 +82,29 @@ class VesyncClient extends BaseSubscriber {
   }
 
   async post(req) {
-    const devices = await this.getDevices([(d) => d.uuid === req.body.key]);
+    if (this.canLogin) {
+      const devices = await this.getDevices([(d) => d.uuid === req.body.key]);
+      let response = "";
 
-    switch (req.body.command) {
-      case "power":
-        return await this.client.toggle(devices[0], req.body.value);
-      case "brightness":
-        return await this.client.setBrightness(devices[0], req.body.value);
-      default:
-        throw new Error(`${req.body.command} is not supported`);
+      switch (req.body.command) {
+        case "power":
+          response = await this.client.toggle(devices[0], req.body.value);
+          return { message: response.data.msg };
+        case "brightness":
+          response = await this.client.setBrightness(
+            devices[0],
+            req.body.value
+          );
+          return { message: response.data.msg };
+        default:
+          throw new HTTPError(
+            `Setting the ${command} failed`,
+            HTTPError.BadRequest
+          );
+      }
     }
+
+    throw new HTTPError(`Not Authorized`, HTTPError.Unauthorized);
   }
 }
 

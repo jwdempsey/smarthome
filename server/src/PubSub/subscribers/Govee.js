@@ -1,5 +1,6 @@
 const BaseSubscriber = require("../BaseSubscriber");
 const Govee = require("node-govee-led");
+const HTTPError = require("../../HTTPError");
 
 class GoveeClient extends BaseSubscriber {
   constructor() {
@@ -11,6 +12,7 @@ class GoveeClient extends BaseSubscriber {
         model: "model",
         commands: "supportCmds",
         properties: "properties",
+        message: "message",
       },
       each: (item) => {
         let properties = item.properties;
@@ -45,18 +47,21 @@ class GoveeClient extends BaseSubscriber {
 
   async getDevices(filters = []) {
     let devices = [];
-    this.login();
 
-    await this.client
-      .getDevices()
-      .then((deviceList) => {
-        devices = deviceList.devices.filter((device) =>
-          filters.every((f) => f(device))
-        );
-      })
-      .catch(() => {
-        return;
-      });
+    if (this.canLogin) {
+      this.login();
+
+      await this.client
+        .getDevices()
+        .then((deviceList) => {
+          devices = deviceList.devices.filter((device) =>
+            filters.every((f) => f(device))
+          );
+        })
+        .catch(() => {
+          return devices;
+        });
+    }
 
     return devices;
   }
@@ -77,21 +82,34 @@ class GoveeClient extends BaseSubscriber {
   }
 
   async post(req) {
-    const client = this.login(req.body.key, req.body.model);
-    switch (req.body.command) {
-      case "power":
-        if (!req.body.value) {
-          return await client.turnOff();
-        } else {
-          return await client.turnOn();
-        }
-      case "brightness":
-        return await client.setBrightness(parseInt(req.body.value));
-      case "color":
-        return await client.setColor(req.body.value);
-      default:
-        throw new Error(`${req.body.command} is not supported`);
+    if (this.canLogin) {
+      const client = this.login(req.body.key, req.body.model);
+      let response = "";
+
+      switch (req.body.command) {
+        case "power":
+          if (!req.body.value) {
+            response = await client.turnOff();
+            return { message: response.message };
+          } else {
+            response = await client.turnOn();
+            return { message: response.message };
+          }
+        case "brightness":
+          response = await client.setBrightness(parseInt(req.body.value));
+          return { message: response.message };
+        case "color":
+          response = await client.setColor(req.body.value);
+          return { message: response.message };
+        default:
+          throw new HTTPError(
+            `${req.body.command} is not supported`,
+            HTTPError.BadRequest
+          );
+      }
     }
+
+    throw new HTTPError(`Not Authorized`, HTTPError.Unauthorized);
   }
 }
 

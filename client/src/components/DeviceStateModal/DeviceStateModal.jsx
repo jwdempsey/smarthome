@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
-import SmallModal from "./SmallModal";
-import DynamicInput from "./DynamicInput";
-import Loader from "./Loader";
-import service from "../service";
-import Header from "./Header";
+import SmallModal from "../SmallModal";
+import DynamicInput from "../DynamicInput";
+import Loader from "../Loader";
+import service from "../../service";
+import Header from "../Header";
 
 const DeviceStateModal = (props) => {
   const [device, setDevice] = useState(null);

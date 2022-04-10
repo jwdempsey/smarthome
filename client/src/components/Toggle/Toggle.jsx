@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import service from "../service";
+import service from "../../service";
 
 const Toggle = (props) => {
   const [value, setValue] = useState(false);

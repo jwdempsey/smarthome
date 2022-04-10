@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navbar, Offcanvas, ListGroup } from "react-bootstrap";
-import { TypeContext } from "../contexts/TypeContext";
-import ListItem from "./ListItem";
+import { TypeContext } from "../../contexts/TypeContext";
+import ListItem from "../ListItem";
 
 const TypeSelctor = () => {
   const [types] = useContext(TypeContext);

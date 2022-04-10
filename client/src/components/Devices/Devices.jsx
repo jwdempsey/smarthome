@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Row } from "react-bootstrap";
-import DeviceCard from "./DeviceCard";
-import Loader from "./Loader";
-import service from "../service";
+import DeviceCard from "../DeviceCard";
+import Loader from "../Loader";
+import service from "../../service";
 import PropTypes from "prop-types";
-import { TypeContext } from "../contexts/TypeContext";
+import { TypeContext } from "../../contexts/TypeContext";
 
 const Devices = () => {
   const [devices, setDevices] = useState([]);

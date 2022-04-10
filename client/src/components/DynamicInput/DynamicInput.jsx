@@ -1,9 +1,9 @@
 import React from "react";
 import { LightbulbFill, SunFill, PaletteFill } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
-import Toggle from "./Toggle";
-import Slider from "./Slider";
-import ColorPalette from "./ColorPalette";
+import Toggle from "../Toggle";
+import Slider from "../Slider";
+import ColorPalette from "../ColorPalette";
 
 const DynamicInput = (props) => {
   const defaultSize = 18;

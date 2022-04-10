@@ -1,25 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import service from "../service";
+import service from "../../service";
 
-const ColorPalette = (props) => {
-  const [value, setValue] = useState("#000000");
+const Slider = (props) => {
+  const [value, setValue] = useState(100);
   const timeout = useRef();
 
   useEffect(() => {
-    const color = props.device.properties.color;
-    setValue(rgbToHex(color.r, color.g, color.b));
+    if (hasOwnProperty.call(props.device.properties, "brightness")) {
+      setValue(props.device.properties.brightness);
+    } else {
+      setValue(100);
+    }
   }, []);
-
-  const componentToHex = (c) => {
-    const hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-  };
-
-  const rgbToHex = (r, g, b) => {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-  };
 
   const handleChange = (e) => {
     clearTimeout(timeout.current);
@@ -31,23 +25,33 @@ const ColorPalette = (props) => {
     timeout.current = setTimeout(() => {
       service.notify({
         ...props.device,
-        ...{ command: "color", value: target },
+        ...{ command: "brightness", value: target },
       });
     }, 500);
   };
 
   return (
     <Form.Group as={Row}>
-      <Col xs="12">
+      <Col xs="4">
         <Form.Label>{props.title}</Form.Label>
       </Col>
-      <Col xs="1">{props.children}</Col>
-      <Col xs="11">
+      <Col xs="4">
         <Form.Control
-          type="color"
-          id="color-picker"
-          title="Choose your color"
-          defaultValue={value}
+          className="slider-value"
+          type="text"
+          placeholder="100"
+          value={value}
+          disabled={true}
+        />
+      </Col>
+      <Col xs="12">
+        {props.children}
+        <Form.Range
+          min="0"
+          max="100"
+          step="1"
+          id="brightness-slider"
+          value={value}
           onChange={handleChange}
         />
       </Col>
@@ -55,10 +59,10 @@ const ColorPalette = (props) => {
   );
 };
 
-ColorPalette.propTypes = {
+Slider.propTypes = {
   title: PropTypes.string.isRequired,
   device: PropTypes.object.isRequired,
   children: PropTypes.node,
 };
 
-export default ColorPalette;
+export default Slider;

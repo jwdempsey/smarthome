@@ -8,7 +8,8 @@
     "server": "node server/src",
     "build": "webpack --config webpack.config.js --mode production",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
-    "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js"
+    "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Joe Dempsey",
@@ -21,16 +22,17 @@
     "node-govee-led": "^1.5.0",
     "node-json-transform": "^1.1.2",
     "node-vesync": "^1.0.2",
-    "react": "^17.0.2",
+    "react": "^18.0.0",
     "react-bootstrap": "^2.1.0",
-    "react-bootstrap-icons": "^1.7.2",
-    "react-dom": "^17.0.2",
+    "react-bootstrap-icons": "^1.8.1",
+    "react-dom": "^18.0.0",
     "tplink-cloud-api": "github:jwdempsey/tplink-cloud-api"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
-    "@babel/preset-env": "^7.16.5",
-    "@babel/preset-react": "^7.16.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
     "concurrently": "^7.0.0",
     "css-loader": "^6.5.1",
@@ -39,11 +41,20 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.0.0",
     "sass": "^1.46.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(scss|less|css)$": "identity-obj-proxy"
+    },
+    "testEnvironment": "jsdom"
   }
 }

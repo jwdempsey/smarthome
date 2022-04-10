@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Container, Col, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
-import DeviceStateModal from "./DeviceStateModal";
-import DynamicButton from "./DynamicButton";
-import service from "../service";
-import Header from "./Header";
-import { TypeContext } from "../contexts/TypeContext";
+import DeviceStateModal from "../DeviceStateModal";
+import DynamicButton from "../DynamicButton";
+import service from "../../service";
+import Header from "../Header/Header";
+import { TypeContext } from "../../contexts/TypeContext";
 
 const DeviceCard = (props) => {
   const [show, setShow] = useState(false);

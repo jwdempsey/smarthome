@@ -1,5 +1,6 @@
 const BaseSubscriber = require("../BaseSubscriber");
 const { login } = require("tplink-cloud-api");
+const HTTPError = require("../../HTTPError");
 
 class KasaClient extends BaseSubscriber {
   constructor() {
@@ -12,6 +13,7 @@ class KasaClient extends BaseSubscriber {
         properties: "properties",
         type: "deviceType",
         commands: "commands",
+        message: "message",
       },
       each: (item) => {
         let type = item.type ? item.type.toLowerCase() : "";
@@ -102,24 +104,51 @@ class KasaClient extends BaseSubscriber {
   async post(req) {
     if (this.canLogin) {
       const device = this.client.newDevice(req.body.name);
+      let response = "";
 
       switch (req.body.command) {
         case "power":
           if (!req.body.value) {
-            return await device.powerOff();
+            response = await device.powerOff();
+            return { message: this.getResponse(req.body.command, response) };
           } else {
-            return await device.powerOn();
+            response = await device.powerOn();
+            return { message: this.getResponse(req.body.command, response) };
           }
         case "brightness":
           // API does not allow a brightness level of 0
           const brightness = req.body.value == 0 ? 1 : parseInt(req.body.value);
-          return await device.setBrightness(brightness);
+          response = await device.setBrightness(brightness);
+          return { message: this.getResponse(req.body.command, response) };
         default:
-          throw new Error(`${req.body.command} is not supported`);
+          throw new HTTPError(
+            `${req.body.command} is not supported`,
+            HTTPError.BadRequest
+          );
       }
     }
 
-    return {};
+    throw new HTTPError(`Not Authorized`, HTTPError.Unauthorized);
+  }
+
+  getResponse(command, response) {
+    if (command === "power") {
+      if (response.system.set_relay_state.err_code == 0) {
+        return "Success";
+      }
+    } else if (command === "brightness") {
+      for (const [, value] of Object.entries(response)) {
+        if (
+          value.hasOwnProperty("set_brightness") &&
+          value.set_brightness.hasOwnProperty("err_code") &&
+          value.set_brightness.err_code == 0
+        ) {
+          return "Success";
+        }
+      }
+    }
+
+    throw new HTTPError(`Setting the ${command} failed`, HTTPError.BadRequest);
   }
 }
 

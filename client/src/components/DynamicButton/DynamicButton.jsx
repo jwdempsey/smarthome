@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import ButtonState from "./ButtonState";
+import ButtonState from "../ButtonState";
 
 const DynamicButton = (props) => {
   const [buttonState, setButtonState] = useState("default");

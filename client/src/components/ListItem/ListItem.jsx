@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { TypeContext } from "../contexts/TypeContext";
+import { TypeContext } from "../../contexts/TypeContext";
 
 const ListItem = (props) => {
   const [, , , setCurrentDevice] = useContext(TypeContext);

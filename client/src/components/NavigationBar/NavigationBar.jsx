@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { HouseDoor } from "react-bootstrap-icons";
-import TypeSelctor from "./TypeSelector";
+import TypeSelctor from "../TypeSelector";
 
 const NavigationBar = () => {
   return (
