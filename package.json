@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.config.js --mode production",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js",
-    "test": "jest"
+    "tests": "jest"
   },
   "keywords": [],
   "author": "Joe Dempsey",
@@ -32,6 +32,7 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@testing-library/react": "^13.0.0",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
     "concurrently": "^7.0.0",
@@ -43,7 +44,7 @@
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "react-test-renderer": "^18.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "sass": "^1.46.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
@@ -55,6 +56,10 @@
     "moduleNameMapper": {
       "\\.(scss|less|css)$": "identity-obj-proxy"
     },
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "automock": false,
+    "setupFilesAfterEnv": [
+      "./client/src/setupTests.js"
+    ]
   }
 }

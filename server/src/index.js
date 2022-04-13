@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const handleError = (e) => {
+const handleError = (res, e) => {
   if (e instanceof HTTPError) {
     res.status(e.status);
   } else {
@@ -27,14 +27,14 @@ app
     PubSub.notify("get", req)
       .then((response) => res.send(response))
       .catch((e) => {
-        handleError(e);
+        handleError(res, e);
       });
   })
   .post((req, res) => {
     PubSub.notify("post", req)
       .then((response) => res.send(response))
       .catch((e) => {
-        handleError(e);
+        handleError(res, e);
       });
   });
 
@@ -42,7 +42,7 @@ app.get("/api/devices/:manufacturer/:key", (req, res) => {
   PubSub.notify("getById", req)
     .then((response) => res.send(response))
     .catch((e) => {
-      handleError(e);
+      handleError(res, e);
     });
 });
 
