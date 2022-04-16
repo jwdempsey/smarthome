@@ -15,6 +15,7 @@ const ListItem = (props) => {
       action
       onClick={() => {
         handleClick(props.value);
+        props.showSelector(false);
       }}
     >
       <i className={props.icon} />
@@ -27,6 +28,7 @@ ListItem.propTypes = {
   value: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  showSelector: PropTypes.func.isRequired,
 };
 
 export default ListItem;
