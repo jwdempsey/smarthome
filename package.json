@@ -9,7 +9,9 @@
     "build": "webpack --config webpack.config.js --mode production",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js",
-    "tests": "jest"
+    "tests": "jest",
+    "preversion": "npm install && npm run lint && npm run tests",
+    "postversion": "git push origin master --follow-tags"
   },
   "keywords": [],
   "author": "Joe Dempsey",
