@@ -6,13 +6,10 @@ A React app that can be used to access all your smart devices in one place.
 - Vesync
 - Govee
 - Kasa
+- iRobot
 
 ## Future Support
-- Ecobee
-- iRobot
-- Deco
-- Sylvania
-- Hunter
+- Nest
 - Sonos
 
 ## Installation
