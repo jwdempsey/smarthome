@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint --ext .js,.jsx .",
     "tests": "jest",
-    "preversion": "pm install && npm run lint && npm run tests",
+    "preversion": "npm install && npm run lint && npm run tests",
     "postversion": "npm publish",
     "postpublish": "git push origin --all; git push origin --tags"
   },
