@@ -1,42 +1,42 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: "./client/src/index.js",
-  devtool: "source-map",
+  entry: './client/index.js',
+  devtool: 'source-map',
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "build"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'build'),
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/src/index.html",
+      template: './client/index.html',
     }),
   ],
   resolve: {
-    modules: [__dirname, "src", "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+    modules: [__dirname, 'client', 'node_modules'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: require.resolve("babel-loader"),
+        loader: require.resolve('babel-loader'),
       },
       {
         test: /\.(scss|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.png|svg|jpg|gif$/,
-        use: ["file-loader"],
+        use: ['file-loader'],
       },
     ],
   },
   devServer: {
     proxy: {
-      "/api": "http://localhost:3000",
+      '/api': 'http://localhost:3000',
     },
   },
 };

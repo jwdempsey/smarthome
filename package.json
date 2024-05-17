@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "client": "webpack serve --mode development  --hot",
-    "server": "node server/src",
+    "server": "NODE_ENV=development node --watch server",
+    "dev": "npm run server & npm run client",
     "build": "webpack --config webpack.config.js --mode production",
-    "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
-    "lint": "eslint client/src/**/*.js client/src/**/*.jsx server/src/**/*.js",
+    "lint": "eslint --ext .js,.jsx .",
     "tests": "jest",
-    "preversion": "npm install && npm run lint && npm run tests",
-    "postversion": "git push origin master --follow-tags"
+    "preversion": "pm install && npm run lint && npm run tests",
+    "postversion": "npm publish",
+    "postpublish": "git push origin --all; git push origin --tags"
   },
   "keywords": [],
   "author": "Joe Dempsey",
@@ -38,7 +39,6 @@
     "@testing-library/react": "^13.0.0",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
-    "concurrently": "^7.0.0",
     "css-loader": "^6.5.1",
     "eslint": "^8.8.0",
     "eslint-plugin-react": "^7.28.0",
@@ -62,7 +62,7 @@
     "testEnvironment": "jsdom",
     "automock": false,
     "setupFilesAfterEnv": [
-      "./client/src/setupTests.js"
+      "./client/setupTests.js"
     ]
   }
 }

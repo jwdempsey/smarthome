@@ -4,7 +4,11 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["plugin:react/recommended", "eslint:recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -12,8 +16,31 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react"],
-  "rules": {},
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 0
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "camelcase": "off",
+    "spaced-comment": "error",
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-duplicate-imports": "error",
+    "react-hooks/exhaustive-deps": "off"
+  },
   "settings": {
     "react": {
       "version": "detect"
