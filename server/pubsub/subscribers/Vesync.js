@@ -69,12 +69,12 @@ class VesyncClient extends BaseSubscriber {
 
     // Let's determine what functionality this device has
     if (Object.prototype.hasOwnProperty.call(metadata, 'deviceStatus')) {
-      device.commands.push('turn');
+      device.commands.push({ 'turn': device.deviceName });
       device.properties['powerState'] = metadata.deviceStatus;
     }
 
     if (Object.prototype.hasOwnProperty.call(metadata, 'brightNess')) {
-      device.commands.push('brightness');
+      device.commands.push({ 'brightness': 'brightness' });
       device.properties['brightness'] = metadata.brightNess;
     }
 

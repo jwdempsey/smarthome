@@ -27,14 +27,18 @@ const DeviceStateModal = (props) => {
         <Form className="form">
           {device &&
             device.commands &&
-            device.commands.map((command) => (
-              <DynamicInput
+            device.commands.map((commands) => {
+              const key = Object.keys(commands)[0];
+              const command = commands[key];
+
+              return <DynamicInput
                 key={command}
+                input={key}
                 command={command}
                 title={props.device.name}
                 device={device}
               />
-            ))}
+            })}
         </Form>
       </Loader>
     </SmallModal>

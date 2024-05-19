@@ -10,7 +10,7 @@ class GoveeClient extends BaseSubscriber {
         name: 'deviceName',
         key: 'device',
         model: 'model',
-        commands: 'supportCmds',
+        commands: 'commands',
         properties: 'properties',
         message: 'message',
       },
@@ -77,6 +77,13 @@ class GoveeClient extends BaseSubscriber {
 
     // Get current state of device
     const state = await this.login(device.device, device.model).getState();
+
+    device.commands = [
+      { 'turn': device.deviceName },
+      { 'brightness': 'brightness' },
+      { 'color': 'color' },
+      { 'colorTem': 'colorTem' }
+    ];
 
     return Object.assign(device, { properties: state.data.properties });
   }

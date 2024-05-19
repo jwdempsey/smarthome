@@ -1,16 +1,17 @@
 import React from 'react';
-import { LightbulbFill, SunFill, PaletteFill } from 'react-bootstrap-icons';
+import { GearFill, SunFill, PaletteFill, HouseGearFill } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import Toggle from '../Toggle';
 import Slider from '../Slider';
+import SimpleButton from '../SimpleButton';
 import ColorPalette from '../ColorPalette';
 
 const DynamicInput = (props) => {
-  const defaultSize = 18;
+  const defaultSize = 24;
   const Inputs = {
     turn: (
-      <Toggle title={props.title} device={props.device}>
-        <LightbulbFill size={defaultSize} />
+      <Toggle title={props.command} device={props.device} command={props.command}>
+        <GearFill size={defaultSize} />
       </Toggle>
     ),
     brightness: (
@@ -23,15 +24,21 @@ const DynamicInput = (props) => {
         <PaletteFill className="modal-svg" size={defaultSize} />
       </ColorPalette>
     ),
+    button: (
+      <SimpleButton title={props.command} device={props.device} command={props.command}>
+        <HouseGearFill size={defaultSize} />
+      </SimpleButton>
+    ),
     colorTem: null,
   };
 
-  return Inputs[props.command];
+  return Inputs[props.input];
 };
 
 DynamicInput.propTypes = {
   title: PropTypes.string,
   device: PropTypes.object.isRequired,
+  input: PropTypes.string.isRequired,
   command: PropTypes.string.isRequired,
 };
 

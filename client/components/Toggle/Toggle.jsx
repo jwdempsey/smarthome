@@ -40,6 +40,7 @@ const Toggle = (props) => {
 Toggle.propTypes = {
   title: PropTypes.string.isRequired,
   device: PropTypes.object.isRequired,
+  command: PropTypes.string.isRequired,
   children: PropTypes.node,
 };
 

@@ -88,13 +88,13 @@ class KasaClient extends BaseSubscriber {
 
     // Let's determine what functionality this device has
     if (Object.prototype.hasOwnProperty.call(metadata, 'relay_state')) {
-      device.commands.push('turn');
+      device.commands.push({ 'turn': devices[0].alias });
       device.properties['powerState'] =
         metadata.relay_state === 1 ? 'on' : 'off';
     }
 
     if (Object.prototype.hasOwnProperty.call(metadata, 'brightness')) {
-      device.commands.push('brightness');
+      device.commands.push({ 'brightness': 'brightness' });
       device.properties['brightness'] = metadata.brightness;
     }
 
