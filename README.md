@@ -15,4 +15,4 @@ A React app that can be used to access all your smart devices in one place.
 ## Installation
 1. run `npm install`
 2. Rename `env.example` to `.env` and update any/all API Keys and/or passwords
-3. run `npm run start`
+3. run `npm run dev`
