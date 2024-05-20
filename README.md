@@ -7,9 +7,9 @@ A React app that can be used to access all your smart devices in one place.
 - Govee
 - Kasa
 - iRobot
+- Nest
 
 ## Future Support
-- Nest
 - Sonos
 
 ## Installation
