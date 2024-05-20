@@ -80,7 +80,7 @@ class GoveeClient extends BaseSubscriber {
 
     device.commands = [
       { 'turn': device.deviceName },
-      { 'brightness': 'brightness' },
+      { 'slider': 'Brightness' },
       { 'color': 'color' },
       { 'colorTem': 'colorTem' }
     ];

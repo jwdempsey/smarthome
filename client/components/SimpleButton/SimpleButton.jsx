@@ -5,7 +5,7 @@ import service from '../../service';
 
 const Toggle = (props) => {
   const handleClick = () => {
-    service.notify({ ...{ command: props.command, value: '1' } });
+    service.notify({ ...props.device, ...{ command: props.command, value: '1' } });
   };
 
   return (

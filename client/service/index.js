@@ -21,7 +21,7 @@ const Service = () => {
   };
 
   const getDevice = (device, headers = null) =>
-    fetchApi(`${baseUrl}/${device.manufacturer}/${device.key}`, {
+    fetchApi(`${baseUrl}/${device.manufacturer}/${encodeURIComponent(device.key)}`, {
       method: 'GET',
       headers: assignHeaders(headers),
     });

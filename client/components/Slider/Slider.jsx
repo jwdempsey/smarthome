@@ -25,7 +25,7 @@ const Slider = (props) => {
     timeout.current = setTimeout(() => {
       service.notify({
         ...props.device,
-        ...{ command: 'brightness', value: target },
+        ...{ command: props.title, value: target },
       });
     }, 500);
   };

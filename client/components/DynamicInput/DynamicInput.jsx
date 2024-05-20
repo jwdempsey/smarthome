@@ -14,8 +14,8 @@ const DynamicInput = (props) => {
         <GearFill size={defaultSize} />
       </Toggle>
     ),
-    brightness: (
-      <Slider title="Brightness" device={props.device}>
+    slider: (
+      <Slider title={props.command} device={props.device}>
         <SunFill size={defaultSize} />
       </Slider>
     ),

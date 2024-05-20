@@ -94,7 +94,7 @@ class KasaClient extends BaseSubscriber {
     }
 
     if (Object.prototype.hasOwnProperty.call(metadata, 'brightness')) {
-      device.commands.push({ 'brightness': 'brightness' });
+      device.commands.push({ 'slider': 'Brightness' });
       device.properties['brightness'] = metadata.brightness;
     }
 

@@ -74,7 +74,7 @@ class VesyncClient extends BaseSubscriber {
     }
 
     if (Object.prototype.hasOwnProperty.call(metadata, 'brightNess')) {
-      device.commands.push({ 'brightness': 'brightness' });
+      device.commands.push({ 'slider': 'Brightness' });
       device.properties['brightness'] = metadata.brightNess;
     }
 
