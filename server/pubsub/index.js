@@ -73,7 +73,7 @@ class PubSub {
             const data = await listener.callback(payload);
             return transform(data, listener.schema);
           } catch (e) {
-            return { error: e.message };
+            throw new HTTPError(e.message, Error.BadRequest);
           }
         })
     );
